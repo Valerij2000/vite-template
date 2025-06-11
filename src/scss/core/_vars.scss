@@ -1,0 +1,26 @@
+:root {
+  --fz-main: 1em;
+  // --fz-16: 16px;
+
+  //text-color
+  --text-main-color: #ffffff;
+  --text-secondary-color: #396BC8;
+  --text-blue-color: #1D5DEB;
+  --text-black-color: #000000;
+  --text-gray-color: #5D5D5D;
+  --text-light-gray-color: #c9c9c9;
+  --text-dark-gray-color: #2C2C2E;
+  //--bg-color
+  --bg-light-pink: #FFEFEA;
+  --bg-orange: #FF5E2D;
+  --bg-light-blue: #CCF0FC;
+  --bg-blue: #0075B1;
+
+}
+
+$breakpoints: (xs: 480px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px);

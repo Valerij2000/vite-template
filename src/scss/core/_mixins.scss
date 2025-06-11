@@ -1,0 +1,173 @@
+// for media breakpoint
+@use "sass:math";
+
+// font-settings
+@mixin font-settings($font-family: false, $size: false, $lh: false, $weight: false, $color: false) {
+  @if $font-family {
+    font-family: $font-family;
+  }
+
+  @if $size {
+    font-size: $size;
+  }
+
+  @if $lh {
+    line-height: $lh;
+  }
+
+  @if $weight {
+    font-weight: $weight;
+  }
+
+  @if $color {
+    color: $color;
+  }
+}
+
+:root {
+  --vh: 1vh;
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --vh: 1dvh;
+  }
+}
+
+//для десктопа
+@function vh($value, $screenHeight: 1080) {
+  @return calc($value / $screenHeight * 100 * var(--vh));
+}
+
+@function vw($value, $screenWidth: 1920) {
+  @return calc($value / $screenWidth) * 100vw;
+}
+
+// для мобилки
+@function vw-mob($value, $screenWidth: 360) {
+  @return calc($value / $screenWidth) * 100vw;
+}
+
+@function vh-mob($value, $screenHeight: 940) {
+  @return calc($value / $screenHeight * 100 * var(--vh));
+}
+
+
+@mixin breakpoint($point, $second-point: null) {
+
+  // Условие для портретной ориентации
+  @if $point=="portraits" {
+    @media (orientation: portrait) and (max-width:520px) {
+      @content;
+    }
+  }
+
+  // Условие для ландшафтной ориентации
+  @else if $point=="landscapes" {
+    @media only screen and (max-width: 1024px) and (orientation: landscape) and (max-aspect-ratio: 21/8) {
+      @content;
+    }
+  }
+
+  // Условие для маленьких экранов
+  @else if $point=="sm" {
+    @media (max-width: 520px) {
+      @content;
+    }
+  }
+
+  // Условие для расчета aspect-ratio
+  @else if $second-point !=null {
+    @media (max-aspect-ratio: math.div($point, $second-point)) and (min-width: 520px) {
+      @content;
+    }
+  }
+}
+
+
+
+
+
+
+@function vmin($px-value, $viewport-width: 1920, $viewport-height: 1080) {
+  $vmin-value: min($viewport-width, $viewport-height);
+  @return calc(($px-value / $vmin-value) * 100vmin);
+}
+
+
+@function vmax($px-value, $viewport-width: 1920) {
+  @return calc(($px-value / $viewport-width) * 100vmax);
+}
+
+
+@mixin size-vh($width, $height, $templateHeight: 1080) {
+  $vhWidth: calc($height / $templateHeight) * calc($width / $height) * 100vh;
+  $vhHeight: calc($height / $templateHeight) * 100vh;
+
+  $dvhWidth: calc($height / $templateHeight) * calc($width / $height) * 100dvh;
+  $dvhHeight: calc($height / $templateHeight) * 100dvh;
+
+  // Оборачиваем в & {}, чтобы сохранить порядок
+  & {
+    width: $vhWidth;
+    height: $vhHeight;
+  }
+
+  @supports (height: 100dvh) {
+    & {
+      width: $dvhWidth;
+      height: $dvhHeight;
+    }
+  }
+}
+
+
+
+
+@mixin size-vw($width, $height, $templateWidth: 1920) {
+  width: calc($width / $templateWidth) * 100vw;
+  height: calc($width / $templateWidth) * calc($height / $width) * 100vw;
+}
+
+// для мобилки
+@mixin size-vw-mob($width, $height, $templateWidth: 360) {
+  width: calc($width / $templateWidth) * 100vw;
+  height: calc($width / $templateWidth) * calc($height / $width) * 100vw;
+}
+
+
+@mixin size-vh-mob($width, $height, $templateHeight: 940) {
+  $vhWidth: calc($height / $templateHeight) * calc($width / $height) * 100vh;
+  $vhHeight: calc($height / $templateHeight) * 100vh;
+
+  $dvhWidth: calc($height / $templateHeight) * calc($width / $height) * 100dvh;
+  $dvhHeight: calc($height / $templateHeight) * 100dvh;
+
+  // Оборачиваем в & {}, чтобы сохранить порядок
+  & {
+    width: $vhWidth;
+    height: $vhHeight;
+  }
+
+  @supports (height: 100dvh) {
+    & {
+      width: $dvhWidth;
+      height: $dvhHeight;
+    }
+  }
+}
+
+
+@mixin respond($breakpoint) {
+  $value: map-get($breakpoints, $breakpoint);
+
+  @if $value {
+    @media (max-width: $value) {
+      @content;
+    }
+  }
+
+  @else {
+    @warn "Breakpoint `#{$breakpoint}` not found in \$breakpoints map.";
+  }
+}
