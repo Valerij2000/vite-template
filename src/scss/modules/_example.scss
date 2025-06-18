@@ -1,0 +1,86 @@
+/* === Глобальные переменные и ресет === */
+:root {
+  /* Размер шрифта и отступов: адаптивный, но ограниченный */
+  --font-size-base: clamp(14px, 1.6vmin, 20px);
+  --font-size-heading: clamp(24px, 4vmin, 48px);
+
+  /* Контейнер */
+  --container-width: clamp(320px, 90vmin, 1400px);
+
+  /* Отступы */
+  --spacing: clamp(8px, 2vmin, 24px);
+
+  /* Радиус и тени */
+  --radius: 1vmin;
+  --shadow: 0 0.5vmin 2vmin rgba(0, 0, 0, 0.1);
+}
+
+/* Обертка */
+.wrapp {
+  padding: var(--spacing);
+}
+
+/* Контейнер */
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--spacing);
+}
+
+/* Заголовок */
+.header h1 {
+  font-size: var(--font-size-heading);
+  margin-bottom: var(--spacing);
+  text-align: center;
+}
+
+/* Сетка */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(120px, 20vmin, 300px), 1fr));
+  gap: var(--spacing);
+  margin: var(--spacing) 0;
+}
+
+/* Карточка */
+.card {
+  background-color: #e8e8e8;
+  padding: var(--spacing);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  font-size: clamp(1rem, 2vmin, 1.5rem);
+}
+
+/* Блоки фиксированной высоты с адаптацией */
+.hero {
+  height: clamp(200px, 50vmax, 600px);
+}
+
+/* Кнопки */
+.button {
+  font-size: clamp(14px, 1.5vmin, 20px);
+  padding: clamp(8px, 1vmin, 16px) clamp(16px, 2vmin, 32px);
+}
+
+/* Гибкие иконки */
+.icon {
+  width: clamp(24px, 5vmin, 64px);
+  height: clamp(24px, 5vmin, 64px);
+}
+
+/* Подвал */
+.footer {
+  text-align: center;
+  margin-top: var(--spacing);
+  font-size: clamp(0.8rem, 1.5vmin, 1.2rem);
+  color: #555;
+}
+
+// ! Warning 
+// ❌ Не использовать vmin без clamp() для шрифта — может стать слишком мелким. 
+// ❌ Не задавать отступы в vw/vh, если важна адаптация по ориентации. 
+// ❌ Не миксовать px и vmin/vmax внутри одного контекста — будут несогласованности.
